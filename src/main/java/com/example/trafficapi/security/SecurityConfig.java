@@ -12,8 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -30,13 +35,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 🔓 Desactivar CSRF (para APIs REST)
+                //  Desactivar CSRF (para APIs REST)
                 .csrf(csrf -> csrf.disable())
 
-                // 🔓 Permitir consola de H2 (usa frames)
+                // Permitir consola de H2 (usa frames)
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
-                // 🔒 Rutas públicas y protegidas
+                //  Rutas públicas y protegidas
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/register",
@@ -61,7 +66,19 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ✅ Codificador de contraseñas
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("https://kanbas.netlify.app"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    // Codificador de contraseñas
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
