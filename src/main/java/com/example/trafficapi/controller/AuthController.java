@@ -38,7 +38,7 @@ public class AuthController {
         user.setRole("USER");
         User saved = userRepo.save(user);
 
-        saved.setPassword(null); // limpiar contraseña antes de devolver
+        saved.setPassword(null); // eliminar password antes de devolver
         return saved;
     }
 

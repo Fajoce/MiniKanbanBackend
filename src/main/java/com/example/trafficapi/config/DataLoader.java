@@ -78,7 +78,7 @@ public class DataLoader {
                 inf5.setDriverId("26383993");
                 inf5.setType(InfractionTypes.TYPE_E);
                 inf5.setAmount(200.0);
-                inf5.setStatus(InfractionStatus.PENDING);
+                inf5.setStatus(InfractionStatus.IN_PROCESS);
                 inf5.setOfficerName("Oficial Pertuz");
                 inf5.setDueDate(LocalDateTime.now().plusDays(30));
                 inf5.setNotes("Atropello peaton");
