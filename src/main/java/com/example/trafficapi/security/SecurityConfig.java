@@ -35,13 +35,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //  Desactivar CSRF (para APIs REST)
+                // ✅ Habilitar CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                // Desactivar CSRF (para APIs REST)
                 .csrf(csrf -> csrf.disable())
 
-                // Permitir consola de H2 (usa frames)
+                // Permitir consola H2
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
-                //  Rutas públicas y protegidas
+                // Rutas públicas y protegidas
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/register",
@@ -57,19 +60,20 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                // 🚫 Sin sesiones (JWT = stateless)
+                // Sin sesiones (JWT = stateless)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // ⚙️ Filtro JWT antes de UsernamePasswordAuthenticationFilter
+                // Filtro JWT
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    // ✅ Configuración global de CORS
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://kanbas.netlify.app"));
+        configuration.setAllowedOrigins(List.of("https://kanbas.netlify.app")); // tu frontend
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
@@ -78,30 +82,16 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
     // Codificador de contraseñas
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ AuthenticationManager para login
+    // AuthenticationManager para login
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-    }
-
-    //  Configuración global de CORS
-   @Bean(name = "securityCorsConfigurer")
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("https://kanbas.netlify.app") // ✅ en lugar de allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
     }
 }
