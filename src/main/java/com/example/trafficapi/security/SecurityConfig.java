@@ -73,18 +73,18 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    /* ✅ Configuración global de CORS
+    //  Configuración global de CORS
    @Bean(name = "securityCorsConfigurer")
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns("*") // ✅ en lugar de allowedOrigins("*")
+                        .allowedOrigins("https://kanbas.netlify.app") // ✅ en lugar de allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };
-    }*/
+    }
 }
