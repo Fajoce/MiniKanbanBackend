@@ -36,11 +36,14 @@ public class AuthController {
         user.setUsername(register.getUsername());
         user.setPassword(encoder.encode(register.getPassword()));
         user.setRole("USER");
-        return userRepo.save(user);
+        User saved = userRepo.save(user);
+
+        saved.setPassword(null); // limpiar contraseña antes de devolver
+        return saved;
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest request) {
         try {
             Authentication auth = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -49,14 +52,13 @@ public class AuthController {
                     )
             );
 
-            // ✅ No hacer cast a tu clase User
-            String username = auth.getName(); // obtiene el username autenticado
+            String username = auth.getName();
             String token = jwtService.generateToken(username);
 
-            return ResponseEntity.ok(Map.of("token", token)).getBody();
+            return ResponseEntity.ok(Map.of("token", token));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Credenciales erróneas")).getBody();
+                    .body(Map.of("error", "Credenciales erróneas"));
         }
     }
 }
