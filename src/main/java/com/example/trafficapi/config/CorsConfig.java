@@ -13,8 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("https://kanbas.netlify.app,http://localhost:4200")
+                registry.addMapping("/**") // permite todas las rutas
+                        .allowedOrigins(
+                                "https://kanbas.netlify.app",
+                                "http://localhost:4200"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
