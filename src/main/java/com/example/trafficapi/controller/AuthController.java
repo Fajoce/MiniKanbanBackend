@@ -2,6 +2,7 @@ package com.example.trafficapi.controller;
 
 import com.example.trafficapi.dto.LoginRequest;
 import com.example.trafficapi.dto.RegisterUser;
+import com.example.trafficapi.model.Infraction;
 import com.example.trafficapi.model.User;
 import com.example.trafficapi.repository.UserRepository;
 import com.example.trafficapi.security.JwtService;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,6 +30,11 @@ public class AuthController {
         this.userRepo = userRepo;
         this.encoder = encoder;
         this.jwtService = jwtService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAll() {
+        return ResponseEntity.ok(userRepo.getAll());
     }
 
     @PostMapping("/register")
@@ -61,4 +68,5 @@ public class AuthController {
                     .body(Map.of("error", "Credenciales erróneas"));
         }
     }
+
 }
