@@ -35,7 +35,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // ✅ Habilitar CORS
+                //  Habilitar CORS
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 // Desactivar CSRF (para APIs REST)
@@ -70,7 +70,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ✅ Configuración global de CORS
+    // Configuración global de CORS
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -18,7 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "https://kanbas.netlify.app,http://localhost:4200")
+//@CrossOrigin(origins = "https://kanbas.netlify.app,http://localhost:4200")
 public class AuthController {
     private final AuthenticationManager authManager;
     private final UserRepository userRepo;
