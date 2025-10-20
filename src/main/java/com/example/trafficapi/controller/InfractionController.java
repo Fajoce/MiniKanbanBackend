@@ -8,6 +8,7 @@ import com.example.trafficapi.model.InfractionTypes;
 import com.example.trafficapi.service.InfractionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class InfractionController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/status/{status}")
+    @GetMapping(value = "/status/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Infraction>> getByStatus(@PathVariable InfractionStatus status) {
         List<Infraction> infractions = service.getByStatus(status);
         return ResponseEntity.ok(infractions);

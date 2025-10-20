@@ -12,7 +12,6 @@ com\example\trafficapi\config\CorsConfig.class
 com\example\trafficapi\model\InfractionTypes.class
 com\example\trafficapi\exception\ResourceNotFoundException.class
 com\example\trafficapi\controller\AuthController.class
-com\example\trafficapi\security\SecurityConfig$1.class
 com\example\trafficapi\repository\InfractionRepository.class
 com\example\trafficapi\dto\InfractionCreateDto.class
 com\example\trafficapi\model\Infraction.class
