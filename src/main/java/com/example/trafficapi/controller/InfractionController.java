@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/infractions")
-@CrossOrigin(origins = "http://localhost:4200,https://kanbas.netlify.app")
+@CrossOrigin(origins = "https://kanbas.netlify.app,http://localhost:4200")
 public class InfractionController {
 
     private final InfractionService service;
