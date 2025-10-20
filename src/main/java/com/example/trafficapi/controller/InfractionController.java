@@ -35,7 +35,7 @@ public class InfractionController {
         return ResponseEntity.ok(infractions);
     }
 
-    @GetMapping("/{type}")
+    @GetMapping("/type/{type}")
     public ResponseEntity<List<Infraction>> getByType(@PathVariable InfractionTypes type) {
         List<Infraction> infractions = service.findByType(type);
         return ResponseEntity.ok(infractions);
