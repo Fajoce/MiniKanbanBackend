@@ -32,6 +32,7 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userRepo.getAll());
@@ -68,6 +69,5 @@ public class AuthController {
                     .body(Map.of("error", "Credenciales erróneas"));
         }
     }
-
 
 }
