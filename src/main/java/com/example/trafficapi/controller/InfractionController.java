@@ -41,6 +41,11 @@ public class InfractionController {
         List<Infraction> infractions = service.findByType(type);
         return ResponseEntity.ok(infractions);
     }
+    @GetMapping("/driver/{driverId}")
+    public ResponseEntity<List<Infraction>> getByDriverId(@PathVariable String driverId) {
+        List<Infraction> infractions = service.getByDriverId(driverId);
+        return ResponseEntity.ok(infractions);
+    }
 
     @PostMapping
     public ResponseEntity<Infraction> create(@Valid @RequestBody InfractionCreateDto dto) {

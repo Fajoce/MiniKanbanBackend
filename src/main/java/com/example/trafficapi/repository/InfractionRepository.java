@@ -9,8 +9,11 @@ import com.example.trafficapi.model.InfractionTypes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
+
 @Repository
 public interface InfractionRepository extends JpaRepository<Infraction, Long> {
     List<Infraction> findByStatus(InfractionStatus status);
     List<Infraction> findByType(InfractionTypes types);
+    List<Infraction> findByDriverId(String driverId);
 }

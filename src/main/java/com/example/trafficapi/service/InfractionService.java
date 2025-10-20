@@ -35,6 +35,9 @@ public class InfractionService {
     public List<Infraction> findByType(InfractionTypes type){
         return repo.findByType(type);
     }
+    public List<Infraction> getByDriverId(String driverId) {
+        return repo.findByDriverId(driverId);
+    }
 
     public Infraction create(InfractionCreateDto dto) {
         Infraction inf = new Infraction();
