@@ -29,7 +29,7 @@ public class InfractionController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/{status}")
+    @GetMapping("/status/{status}")
     public ResponseEntity<List<Infraction>> getByStatus(@PathVariable InfractionStatus status) {
         List<Infraction> infractions = service.getByStatus(status);
         return ResponseEntity.ok(infractions);
